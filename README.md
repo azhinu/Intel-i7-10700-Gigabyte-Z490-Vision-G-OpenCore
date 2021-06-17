@@ -1,3 +1,5 @@
+# This repo is under construct!
+
 # Gigabyte Z490 Vision G Hackintosh OpenCore
 
 **5T4TU5**: Completed 100%. Added Clover EFI as well.</br>
