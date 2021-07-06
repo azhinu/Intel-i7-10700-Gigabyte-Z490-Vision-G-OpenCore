@@ -79,6 +79,8 @@
                 <false/>
                 <key>ResetLogoStatus</key>
                 <false/>
+                <key>SyncTableIds</key>
+			          <false/>
             </dict>
         </dict>
         <key>Booter</key>
@@ -133,7 +135,7 @@
         <dict>
             <key>Add</key>
             <dict>
-                <key>PciRoot(0x0)/Pci(0x2,0x0)</key>
+                <key>#PciRoot(0x0)/Pci(0x2,0x0)</key>
                 <dict>
                     <key>AAPL,ig-platform-id</key>
                     <data>BwCbPg==</data>
@@ -197,12 +199,12 @@
                 <dict>
                     <key>device_type</key>
                     <string>Audio device</string>
-                    <key>layout-id</key>
-                    <integer>28</integer>
+            				<key>layout-id</key>
+            				<integer>17</integer>
                     <key>model</key>
                     <string>Realtek ALC1220-VB</string>
                 </dict>
-                <key>#PciRoot(0x0)/Pci(0x2,0x0)</key>
+                <key>PciRoot(0x0)/Pci(0x2,0x0)</key>
                 <dict>
                     <key>AAPL,ig-platform-id</key>
                     <data>AwDImw==</data>
@@ -214,6 +216,13 @@
                     <string>Display Controller</string>
                     <key>model</key>
                     <string>Intel UHD Graphics 630 (Headless)</string>
+                </dict>
+                <key>PciRoot(0x0)/Pci(0x1,0x0)/Pci(0x0,0x0)</key>
+                <dict>
+                  <key>device-id</key>
+                  <data>EGg=</data>
+                  <key>model</key>
+                  <string>Radeon R9 270</string>
                 </dict>
             </dict>
             <key>Delete</key>
@@ -553,6 +562,8 @@
             </dict>
             <key>Scheme</key>
             <dict>
+              <key>CustomKernel</key>
+			          <false/>
                 <key>FuzzyMatch</key>
                 <true/>
                 <key>KernelArch</key>
@@ -592,7 +603,7 @@
                 <key>TakeoffDelay</key>
                 <integer>0</integer>
                 <key>Timeout</key>
-                <integer>5</integer>
+                <integer>10</integer>
             </dict>
             <key>Debug</key>
             <dict>
@@ -678,7 +689,7 @@
                     <key>SystemAudioVolume</key>
                     <data>Rg==</data>
                     <key>boot-args</key>
-                    <string>-wegnoegpu keepsyms=1</string>
+                    <string>keepsyms=1 -raddvi</string>
                     <key>csr-active-config</key>
                     <data>AAAAAA==</data>
                     <key>prev-lang:kbd</key>
@@ -748,7 +759,7 @@
                 <key>AdviseFeatures</key>
                 <false/>
                 <key>MLB</key>
-                <string></string>
+                <string>C02036303GUPHCD1H</string>
                 <key>MaxBIOSVersion</key>
                 <false/>
                 <key>ProcessorType</key>
@@ -762,9 +773,9 @@
                 <key>SystemProductName</key>
                 <string>iMac20,1</string>
                 <key>SystemSerialNumber</key>
-                <string></string>
+                <string>C02DC0WPPN5T</string>
                 <key>SystemUUID</key>
-                <string></string>
+                <string>D0D695CD-3B87-4608-AD85-A0A7D7F1CAF9</string>
             </dict>
             <key>UpdateDataHub</key>
             <true/>
@@ -943,12 +954,12 @@
                 <false/>
                 <key>ReloadOptionRoms</key>
                 <false/>
-                <key>RequestBootVarRouting</key>
-                <true/>
                 <key>TscSyncTimeout</key>
                 <integer>0</integer>
                 <key>UnblockFsConnect</key>
                 <false/>
+                <key>RequestBootVarRouting</key>
+                <true/>
             </dict>
             <key>ReservedMemory</key>
             <array/>
