@@ -31,7 +31,8 @@ This repo based on [5T33Z0 Gigabyte-Z490-Vision-G](https://github.com/5T33Z0/Gig
 | BIOS		      | F20. F5 or higher is required to disable `CFG Lock`. Otherwise use Kernel Quirk `AppleXcpmCfgLock`|
 | CPU                 | Intel® Core i7 10700 (Codename Comet Lake) |
 | RAM                 | 32 GB DDR4 2400 Crucial Basllistix Sport LT |
-| iGPU		      | Intel® UHD 630 as main GPU.                       |
+| iGPU		      | Intel® UHD 630 Headless                     |
+| dGPU                | AMD Radeon R9 270                           |
 | Audio               | Realtek® ALC1220-VB (Layout-id: `28`)       |
 | Ethernet            | Intel® 2.5GbE LAN chip.                     |
 </details>
