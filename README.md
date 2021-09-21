@@ -1,22 +1,22 @@
-# This repo is under construct!
-
 # Gigabyte Z490 Vision G Hackintosh OpenCore
 
 **Repo status**: Slowly maintained. Tested only with Catalina
 
 [![Board](https://img.shields.io/badge/Gigabyte-Z490_Vision_G-informational.svg)](https://www.gigabyte.com/Motherboard/Z490-VISION-G-rev-1x/support#support-dl-bios)
-[![OpenCore Version](https://img.shields.io/badge/OpenCore-0.7.0-important.svg)](https://github.com/acidanthera/OpenCorePkg/releases/latest)
+[![OpenCore Version](https://img.shields.io/badge/OpenCore-0.7.3-important.svg)](https://github.com/acidanthera/OpenCorePkg/releases/latest)
 [![macOS Catalina](https://img.shields.io/badge/macOS-10.15.7-green.svg)](https://www.apple.com/li/macos/catalina/)
-[![macOS Big Sur](https://img.shields.io/badge/macOS-11.4-yellow.svg)](https://www.apple.com/macos/big-sur/)
+
+Original repo:
+[![macOS Big Sur](https://img.shields.io/badge/macOS-11.5.2-white.svg)](https://www.apple.com/macos/big-sur/)
 [![macOS Monterey](https://img.shields.io/badge/macOS-12.0_beta-white.svg)](https://www.apple.com/macos/monterey-preview/)
 
-
 <img src="./Additional%20Files/sysinfo.png" width=600px/>
+
 ## Introduction
 
-This repo based on [5T33Z0 Gigabyte-Z490-Vision-G](https://github.com/5T33Z0/Gigabyte-Z490-Vision-G-Hackintosh-OpenCore). I made some changes especially for my system. There is only necessary kexts and drivers.
+This repo based on [5T33Z0 Gigabyte-Z490-Vision-G](https://github.com/5T33Z0/Gigabyte-Z490-Vision-G-Hackintosh-OpenCore). I made some changes especially for my system drived by Catalina, so i recommend you to check original repo.
 
-**NOTE**: For best results, read and follow the install instruction carefully and thoroughly. 
+**NOTE**: For best results, read and follow the install instruction carefully and thoroughly.
 
 ## Build Info
 
@@ -28,10 +28,10 @@ This repo based on [5T33Z0 Gigabyte-Z490-Vision-G](https://github.com/5T33Z0/Gig
 | Component           | Details                                     |
 | :------------------ | :------------------------------------------ |
 | Mainboard           | Gigabyte Z490 Vision G                      |
-| BIOS		      | F20. F5 or higher is required to disable `CFG Lock`. Otherwise use Kernel Quirk `AppleXcpmCfgLock`|
-| CPU                 | Intel® Core i7 10700 (Codename Comet Lake) |
+| BIOS		   			    | F20. F5 or higher is required to disable `CFG Lock`. Otherwise use Kernel Quirk `AppleXcpmCfgLock`|
+| CPU                 | Intel® Core i7 10700 (Codename Comet Lake) 	|
 | RAM                 | 32 GB DDR4 2400 Crucial Basllistix Sport LT |
-| iGPU		      | Intel® UHD 630 Headless                     |
+| iGPU		   			    | Intel® UHD 630 Headless                     |
 | dGPU                | AMD Radeon R9 270                           |
 | Audio               | Realtek® ALC1220-VB (Layout-id: `28`)       |
 | Ethernet            | Intel® 2.5GbE LAN chip.                     |
@@ -42,7 +42,7 @@ This repo based on [5T33Z0 Gigabyte-Z490-Vision-G](https://github.com/5T33Z0/Gig
 ### BIOS Settings
 
 * **Tweaker [TAB]**
-	* Extreme Memory Profile (XMP): Enabled (if supported by RAM)
+  * Extreme Memory Profile (XMP): Enabled (if supported by RAM)
 	* Advanced CPU Settings
 		* VT-d: Enabled (disabled in config.plist anyway, so only relevant to Windows)
 * **Setings [TAB]**
@@ -63,16 +63,16 @@ This repo based on [5T33Z0 Gigabyte-Z490-Vision-G](https://github.com/5T33Z0/Gig
 			* Network Stack: Disabled
 * **Boot [TAB]**
 	* CFGLock: Disabled (Option only available on newer BIOS versions)
-	* Windows 10 Features: Windows 10 
+	* Windows 10 Features: Windows 10
 	* CSM: Disabled
 
-	
+
 	![](https://github.com/5T33Z0/Gigabyte-Z490-Vision-G-Hackintosh-OpenCore/raw/main/Pics/Gigabye-VisionG-BIOS-Hackintosh.jpg)
-	
+
 </details>
 <details>
 <summary><strong>OpenCore and Config Details</strong></summary>
-	
+
 ### OpenCore Details
 
 * **Version**: 0.7.0 (details see `config.plist`)
@@ -93,7 +93,7 @@ The following Kexts are disabled by default:
 - `IntelBluetoothFirmware.kext`, `IntelBluetoothInjector.kext`, `itlwm.kext`
 	- Enable they if you have Intel WiFi/Bluetooth module.
 
-- `CPUFriend.kext` and `CPUFriendDataProvider.kext` are enabled by default. 
+- `CPUFriend.kext` and `CPUFriendDataProvider.kext` are enabled by default.
 	- If you use a different CPU model, create your own DataProviderKext using [CPUFriendFriend](https://github.com/corpnewt/CPUFriendFriend) and replace original kext. See [Post-install Tweaks
 ](#Post-install-tweaks)</details>
 
@@ -102,15 +102,15 @@ The following Kexts are disabled by default:
 <summary><strong>How to install macOS</strong></summary>
 
 ### Installing macOS
-If you already have macOS installed but want to perform a clean install, you can either download macOS from the App Store or use [**ANYmacOS**](https://www.sl-soft.de/en/anymacos/). It's a hassle-free app than can download Catalina and Big Sur. It also can create a USB Installer for you. And if you create multiple HFS partitions in the correct sizes, you can use it to create a multi macOS Installer USB Stick as well. 
+If you already have macOS installed but want to perform a clean install, you can either download macOS from the App Store or use [**ANYmacOS**](https://www.sl-soft.de/en/anymacos/). It's a hassle-free app than can download Catalina and Big Sur. It also can create a USB Installer for you. And if you create multiple HFS partitions in the correct sizes, you can use it to create a multi macOS Installer USB Stick as well.
 
 If you are on Windows or Linux, follow the guide provided by [Dortania](https://dortania.github.io/OpenCore-Install-Guide/installer-guide/#making-the-installer)
 </details>
 <details>
 <summary><strong>EFI Install Instructions</strong></summary>
 
-### EFI Install Guide for OpenCore 
-	
+### EFI Install Guide for OpenCore
+
 1. Download latest OC EFI Release and unpack it
 2. Select the config of your choice and rename it to `config.plist`
 3. choose `csr-active-config` based on your macOS version to disable SIP: `67080000` for Big Sur, `FF070000` for Catalina/Mojave
@@ -118,19 +118,16 @@ If you are on Windows or Linux, follow the guide provided by [Dortania](https://
 	- AMD GPUs may require additional `boot-args`. Check WhateverGreen repo to find out which you need.
 	- The `config.plist` uses iGPU for Display(s) by default. If you want to use dGPU and iGPU in headless mode, open `config.plist` with a plist editor (or text editor) and comment-out the dictionary `PciRoot(0x0)/Pci(0x2,0x0)` with "#" first, to disable the existing entry. Then uncomment headless dict.		- **NOTE:** To choose preffered GPU, you need enable `CSM Support` in `Boot tab`, then go back to `IO Ports`, choose preffered GPU and finally disable `CSM Support`
 5. Getting Intel(R) I225-V Ethernet Controller to work:
-
-	- Catalina and Big Sur Users up to version 11.3, do the following to get internet working:
+   - Catalina and Big Sur Users up to version 11.3, do the following to get internet working:
 		1. In config, go to `DeviceProperties` > `PciRoot(0x0)/Pci(0x1C,0x1)/Pci(0x0,0x0)`
 		2. disable (comment-out) entry: `device-id` `F3158680` (Type: `Data`) if enabled
 		3. enable (un-comment) entry `device-id` `F2158680` (Type: `Data`) if disabled
 		4. Go to `Kernel` > `Patch` and enable `I225-V Patch`
-		
-	- Big Sur Users from 11.4 or higher, do the following to get internet working (default): 
+	- Big Sur Users from 11.4 or higher, do the following to get internet working (default):
 		1. In config, go to `DeviceProperties` > `PciRoot(0x0)/Pci(0x1C,0x1)/Pci(0x0,0x0)`
 		2. disable (comment-out) entry: `device-id` `F2158680` (Type: `Data`) if enabled
 		3. enable (un-comment) entry `device-id` `F3158680` (Type: `Data`) if disabled
 		4. Go to `Kernel` > `Patch` and disable `I225-V Patch`
-
 	- Monterey 12.0 beta Users: No working method known yet
 6. Create SMBIOS infos for `iMac20,1`to the config.plist and save it.
 7. Copy the EFI Folder to a FAT32 formated USB Stick
@@ -143,7 +140,17 @@ If you are on Windows or Linux, follow the guide provided by [Dortania](https://
 </details>
 <details>
 <summary><strong>Post-Install Tweaks</strong></summary>
-	
+
+### Strengthen Security
+Once you got macOS running, change the following settings to make your system more secure:
+
+- Change UEFI > APFS: `MinDate` and `MinVersion` from `-1` (disabled) to the correct values for the macOS version you are using. A list with the correct values for macOS High Sierra up to Big Sur can be found [here](https://github.com/acidanthera/OpenCorePkg/blob/master/Include/Acidanthera/Library/OcApfsLib.h).</br>
+
+	**BACKGROUND**: OpenCore 0.7.2 introduced a new security feature which prevents the APFS driver from loading if it does not match OS-specific Date (`MinDate`) and Version (`MinVersion`). If left at their default value `0` (as set in the `sample.plist`), the macOS partition will not show up in the Boot Picker unless Big Sur or newer is installed. For ease of use (and since I don't know which macOS you will be using) I've deactivated this feature. If you plan to setup a multiboot system running various iterations of macOS you probably should leave it at `-1`. Otherwise you won't be able to boot older macOSes.
+
+- Change `SecureBootModel`from `Disabled` to `j185f` (for iMac20,2) or `j185` (for iMac20,1). **NOTE**: Only applicable to macOS Catalina and newer. You should test these settings first using a USB Bootstick since it can prevent the system from booting. Disable it for installing macOS Monterey if you have issues.
+
+
 ### Optimizing CPU Power Management
 Use [CPUFriendFriend](https://github.com/corpnewt/CPUFriendFriend) to generate a `CPUFriendDataProvider.kext` to optimize the CPU Power Management of your CPU for a more efficent overall performance. You can [follow this Guide](https://github.com/5T33Z0/Gigabyte-Z490-Vision-G-Hackintosh-OpenCore/blob/main/Additional%20Files/CPU_Power_Management_EN.pdf) to create your own.
 When you're done, reboot. Have a look at the CPU behavior using Intel Power Gadget. You can see, that the CPU idle frequency should be lower now:
@@ -151,7 +158,8 @@ When you're done, reboot. Have a look at the CPU behavior using Intel Power Gadg
 ![image](https://github.com/5T33Z0/Gigabyte-Z490-Vision-G-Hackintosh-OpenCore/blob/main/Pics/CPU_PM.png)
 
 ### Enabling Apple Graphics Power Management (AGPM) for dedicated GPUs (NVDIA and AMD)
-- Generate `AGPMInjector.kext` for your GPU using [AGPMInjector](https://github.com/Pavo-IM/AGPMInjector) and 
+
+- Generate `AGPMInjector.kext` for your GPU using [AGPMInjector](https://github.com/Pavo-IM/AGPMInjector) and
 - Copy it to `EFI\OC\Kexts`
 - Enable the entry in the config.plist
 - Save and reboot.
@@ -168,7 +176,7 @@ When you're done, reboot. Have a look at the CPU behavior using Intel Power Gadg
 - rierdorf for [OpenCore Sanity Checker](https://opencore.slowgeek.com/)
 - [SchmockLord](https://github.com/SchmockLord/Hackintosh-Intel-i9-10900k-Gigabyte-Z490-Vision-D) for FakePCIID.kext to get the I225 2.5 Gigabit Ethernet Controller working before a Kernel Patch existed
 - [Corpnewt](https://github.com/corpnewt) for SSDTTime, GenSMBIOS and ProperTree
-- daliansky for [OC Little ACPI Hotpatch Collection](https://github.com/5T33Z0/OC-Little-Translated) 
+- daliansky for [OC Little ACPI Hotpatch Collection](https://github.com/5T33Z0/OC-Little-Translated)
 - [Pavo-IM](https://github.com/Pavo-IM/) for APGM Injector
 - [SL-Soft](https://www.sl-soft.de/software/) for Kext Updater and ANYmacOS
 - jsassu20 for [MacDown](https://macdown.uranusjr.com/) Markdown Editor

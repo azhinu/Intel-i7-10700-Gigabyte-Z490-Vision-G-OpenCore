@@ -1,0 +1,15 @@
+**22.09.2021**
+- Reordered and renamed some keys to match upstream
+- Itlwm replaced with AirportItlwm
+- Removed RealtekRTL8111 (I225-V now works)
+- Filed APFS MinDate and MinVersion with values for Catalina
+- Fetched upstream:
+  - Updated OpenCore to 0.7.3 Release
+  - Updated Drivers, Kexts and Resources
+  - **Config**:
+    - Updated config.plist to reflect latest OpenCore feature-set
+    - Added SecureBootModel entries for iMac20.1 (j185)
+    - Added ScanPolicy values for hiding EFI Folders and NTFS Drives from Boot Picker.
+    - Fixed Intel I225-V kernel patch
+    - Removed SSDT-DMAC.aml for now → unneccessary
+    - Changed UHD630 Framebuffer device-id and stolenmem
