@@ -1,3 +1,43 @@
+**23.01.2022**
+- Fetched upstream:
+  - Updated OpenCore to 0.7.7 Release.
+  - **ACPI**
+  	- Replaced `SSDT-AWAC-DISABLE.aml` with a more elegant [variant](https://github.com/5T33Z0/OC-Little-Translated/tree/main/01_Adding_missing_Devices_and_enabling_Features/System_Clock_(SSDT-AWAC)#method-1-using-ssct-awac_n_rtc_y-recommended)
+  	- Updated `SSDT-EC-USBX` → disables native `H_EC` and adds a fake `EC` for macOS instead.
+    - Added `DMAR.aml` → Modified `DMAR` table with removed memory regions. [More info](https://github.com/5T33Z0/OC-Little-Translated/blob/edd7bfc5afb9f4a3a01435edfebdb417d299a0a8/00_About_ACPI/ACPI_Dropping_Tables/README.md#example-1-dropping-the-dmar-table)
+    - Added `SSDT-DMAC.aml` → Adds `DMAC` device for macOS. [More info](https://github.com/5T33Z0/OC-Little-Translated/tree/main/01_Adding_missing_Devices_and_enabling_Features/DMA_Controller_(SSDT-DMAC))
+    - Added `SSDT-PMC.aml` → Adds `PMCR` device for macOS. [More info](https://github.com/5T33Z0/OC-Little-Translated/tree/main/01_Adding_missing_Devices_and_enabling_Features/PMC_Support_(SSDT-PMC))
+    - Added `SSDT-PORTS.aml` with new Port Mapping → Replaces OEMTableID `xh_cmsd4` (SSDT-7-xh_cmsd4.aml), so `USBPorts.kext` is no longer required! [More info](https://github.com/5T33Z0/OC-Little-Translated/tree/main/03_USB_Fixes/ACPI_Mapping_USB_Ports)
+    - Deleted `SSDT-PPMC.aml` → Now for 100/200 Series Boards only.
+  - **Config**
+    - Added UEFI > AppleInput > `GraphicsInputMirroring` option → new OpenCore option.
+    - Added UEFI > Audio > `DisconnectHda` option → new OpenCore option.
+    - Added UEFI > Drivers > `Comment` option → new OpenCore option.
+    - Added UEFI > Output > `ReconnectGraphicsOnConnect` option → new OpenCore option.
+    - Added UEFI > Output > `UIScale` option → new OpenCore option.
+    - Added UEFI > Quirks > `EnableVmx` option → new OpenCore option.
+    - Added UEFI > Quirks > `ForceOcWriteFlash` option → new OpenCore option.
+    - Added UEFI > Quirks > `ResizeGpuBars` option → new OpenCore option.
+    - Disabled `DisableIoMapper`. Refered to [DMAR.aml](https://github.com/5T33Z0/OC-Little-Translated/blob/edd7bfc5afb9f4a3a01435edfebdb417d299a0a8/00_About_ACPI/ACPI_Dropping_Tables/README.md#example-1-dropping-the-dmar-table)
+    - Disabled `ExternalDiskIcons` Quirk → no longer necessary.
+    - Kernel > Quirks: enabled `ThirdPartyDrives` → Enable trim for SATA SSDs.
+    - Updated `ResizeAppleGPBars` to `-1`. Refered to [Docs](https://dortania.github.io/docs/release/Configuration.html#x1-260005) if you want to configure it.
+    - Updated UEFI > APFS > `MinDate` to `-1`.
+    - Updated UEFI > APFS > `MinVersion` to `-1`.
+  -  **Kexts**
+    - Removed `USBPorts.kext` → no longer needs. Refered to [SSDT-PORTS.aml](https://github.com/5T33Z0/OC-Little-Translated/tree/main/03_USB_Fixes/ACPI_Mapping_USB_Ports)
+- Reordered some config sections to match upstream.
+- Updated kexts
+- **Config**
+  -  Removed NVRAM > Add `UIScale`. Refered to [Docs](https://dortania.github.io/docs/release/Configuration.html#x1-7900014)
+  - Removed dublicated `csr-active-config` option.
+  - Removed UEFI -> Audio > `MinimumVolume` → removed OpenCore option.
+  - Updated UEFI -> AppleInput > `PointerPollMask` → new OpenCore option.
+  - Updated UEFI -> AppleInput > `PointerPollMax` → new OpenCore option.
+  - Updated UEFI -> AppleInput > `PointerPollMin` → new OpenCore option.
+  - Updated UEFI -> ProtocolOverrides > `FirmwareVolume`. Refered to [Docs](https://dortania.github.io/OpenCore-Post-Install/universal/security/filevault.html)
+
+
 **22.09.2021**
 - Reordered and renamed some keys to match upstream
 - Itlwm replaced with AirportItlwm

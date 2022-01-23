@@ -3,12 +3,12 @@
 **Repo status**: Slowly maintained. Tested only with Catalina
 
 [![Board](https://img.shields.io/badge/Gigabyte-Z490_Vision_G-informational.svg)](https://www.gigabyte.com/Motherboard/Z490-VISION-G-rev-1x/support#support-dl-bios)
-[![OpenCore Version](https://img.shields.io/badge/OpenCore-0.7.3-important.svg)](https://github.com/acidanthera/OpenCorePkg/releases/latest)
+[![OpenCore Version](https://img.shields.io/badge/OpenCore-0.7.7-important.svg)](https://github.com/acidanthera/OpenCorePkg/releases/latest)
 [![macOS Catalina](https://img.shields.io/badge/macOS-10.15.7-green.svg)](https://www.apple.com/li/macos/catalina/)
 
 Original repo:
-[![macOS Big Sur](https://img.shields.io/badge/macOS-11.5.2-white.svg)](https://www.apple.com/macos/big-sur/)
-[![macOS Monterey](https://img.shields.io/badge/macOS-12.0_beta-white.svg)](https://www.apple.com/macos/monterey-preview/)
+[![macOS Big Sur](https://img.shields.io/badge/macOS-11.6.2-white.svg)](https://www.apple.com/macos/big-sur/)
+[![macOS Monterey](https://img.shields.io/badge/macOS-12.2-white.svg)](https://www.apple.com/macos/monterey-preview/)
 
 <img src="./Additional%20Files/sysinfo.png" width=600px/>
 
@@ -45,6 +45,7 @@ This repo based on [5T33Z0 Gigabyte-Z490-Vision-G](https://github.com/5T33Z0/Gig
   * Extreme Memory Profile (XMP): Enabled (if supported by RAM)
 	* Advanced CPU Settings
 		* VT-d: Enabled (disabled in config.plist anyway, so only relevant to Windows)
+		* Intel Speed Shit: Enabled
 * **Setings [TAB]**
 	* Platform Power
 		* ErP: Enabled (so USB Power turns off, after PC is shut down)
@@ -54,7 +55,7 @@ This repo based on [5T33Z0 Gigabyte-Z490-Vision-G](https://github.com/5T33Z0/Gig
 		* Above 4G Decoding: Enabled
 		* Re-Size BAR Support: Disabled
 		* IOAPIC 24-119 Entries: Enabled
-		* Super IO Configurtaion
+		* Super IO Configuration
 			* Serial Port: Disabled
 		* USB Configuration
 			* Legacy USB Support: Disabled
@@ -75,25 +76,25 @@ This repo based on [5T33Z0 Gigabyte-Z490-Vision-G](https://github.com/5T33Z0/Gig
 
 ### OpenCore Details
 
-* **Version**: 0.7.0 (details see `config.plist`)
-* **Compatible macOS**: 10.15.7 (Catalina) and 11.4+ (Big Sur)
+* **Version**: 0.7.7 (details see `config.plist`)
+* **Compatible macOS**: 10.15.7 (Catalina)
 * **System Definition:** `iMac20,1` Using a divergent SMBIOS rather than `iMac20,2` may require remapping of USB Ports, since the `info.plist` inside the `USBPorts.kext` refers to `iMac20,1` as `model`.
 * **ACPI Patches:** `SSDT-AWAC`, `SSDT-EC-USBX`, `SSDT-PLUG`, `SSDT-SBUS-MCHC`, `SSDT-DMAC`, `SSDT-PPMC`
 * **OpenCanopy Enabled**: `yes`
 * **Iconset**: [tekteq](https://github.com/tekteq/opencanopy-minimal-theme)
 * **Chime**: `no`
 * **FileVault**: `yes`
-* **SecureBootModel**: `Disabled`
-* **USB Ports Mapped:** `yes`. Details [here](./Additional%20Files/USB-Map.pdf)
-* **csr-active-config:** Catalina: `FF070000`, Big Sur: `67080000`
+* **SecureBootModel**: `j185`
+* **USB Ports Mapped:** `yes`. Details [here](https://github.com/5T33Z0/Gigabyte-Z490-Vision-G-Hackintosh-OpenCore/blob/main/Additional_Files/USB_Ports_List.pdf)
+* **csr-active-config:** Catalina: SIP Enabled
 
 ### Note about Kexts
-The following Kexts are disabled by default:
+The following Kexts are enabled by default:
 
 - `IntelBluetoothFirmware.kext`, `IntelBluetoothInjector.kext`, `itlwm.kext`
-	- Enable they if you have Intel WiFi/Bluetooth module.
+	- Disable they if you don't have an Intel WiFi/Bluetooth module.
 
-- `CPUFriend.kext` and `CPUFriendDataProvider.kext` are enabled by default.
+- `CPUFriend.kext` and `CPUFriendDataProvider.kext`.
 	- If you use a different CPU model, create your own DataProviderKext using [CPUFriendFriend](https://github.com/corpnewt/CPUFriendFriend) and replace original kext. See [Post-install Tweaks
 ](#Post-install-tweaks)</details>
 
@@ -111,31 +112,19 @@ If you are on Windows or Linux, follow the guide provided by [Dortania](https://
 
 ### EFI Install Guide for OpenCore
 
-1. Download latest OC EFI Release and unpack it
+1. Download latest Release and unpack it
 2. Select the config of your choice and rename it to `config.plist`
-3. choose `csr-active-config` based on your macOS version to disable SIP: `67080000` for Big Sur, `FF070000` for Catalina/Mojave
+3. To disable SIP, use `csr-active-config` `FF070000` for Catalina/Mojave
 4. Graphics:
 	- AMD GPUs may require additional `boot-args`. Check WhateverGreen repo to find out which you need.
 	- The `config.plist` uses iGPU for Display(s) by default. If you want to use dGPU and iGPU in headless mode, open `config.plist` with a plist editor (or text editor) and comment-out the dictionary `PciRoot(0x0)/Pci(0x2,0x0)` with "#" first, to disable the existing entry. Then uncomment headless dict.		- **NOTE:** To choose preffered GPU, you need enable `CSM Support` in `Boot tab`, then go back to `IO Ports`, choose preffered GPU and finally disable `CSM Support`
-5. Getting Intel(R) I225-V Ethernet Controller to work:
-   - Catalina and Big Sur Users up to version 11.3, do the following to get internet working:
-		1. In config, go to `DeviceProperties` > `PciRoot(0x0)/Pci(0x1C,0x1)/Pci(0x0,0x0)`
-		2. disable (comment-out) entry: `device-id` `F3158680` (Type: `Data`) if enabled
-		3. enable (un-comment) entry `device-id` `F2158680` (Type: `Data`) if disabled
-		4. Go to `Kernel` > `Patch` and enable `I225-V Patch`
-	- Big Sur Users from 11.4 or higher, do the following to get internet working (default):
-		1. In config, go to `DeviceProperties` > `PciRoot(0x0)/Pci(0x1C,0x1)/Pci(0x0,0x0)`
-		2. disable (comment-out) entry: `device-id` `F2158680` (Type: `Data`) if enabled
-		3. enable (un-comment) entry `device-id` `F3158680` (Type: `Data`) if disabled
-		4. Go to `Kernel` > `Patch` and disable `I225-V Patch`
-	- Monterey 12.0 beta Users: No working method known yet
-6. Create SMBIOS infos for `iMac20,1`to the config.plist and save it.
-7. Copy the EFI Folder to a FAT32 formated USB Stick
-8. Reboot from USB Stick
-9. Perform an NVRAM Reset
-10. Boot macOS
-11. If your system boots successfully, mount your ESP and copy over the EFI Folder to you HDD/SSD and reboot.
-12. Continue with Post-Install!
+5. Create SMBIOS infos for `iMac20,1`to the config.plist and save it.
+6. Copy the EFI Folder to a FAT32 formated USB Stick
+7. Reboot from USB Stick
+8. Perform an NVRAM Reset
+9. Boot macOS
+10. If your system boots successfully, mount your ESP and copy over the EFI Folder to you HDD/SSD and reboot.
+11. Continue with Post-Install!
 
 </details>
 <details>
@@ -148,7 +137,7 @@ Once you got macOS running, change the following settings to make your system mo
 
 	**BACKGROUND**: OpenCore 0.7.2 introduced a new security feature which prevents the APFS driver from loading if it does not match OS-specific Date (`MinDate`) and Version (`MinVersion`). If left at their default value `0` (as set in the `sample.plist`), the macOS partition will not show up in the Boot Picker unless Big Sur or newer is installed. For ease of use (and since I don't know which macOS you will be using) I've deactivated this feature. If you plan to setup a multiboot system running various iterations of macOS you probably should leave it at `-1`. Otherwise you won't be able to boot older macOSes.
 
-- Change `SecureBootModel`from `Disabled` to `j185f` (for iMac20,2) or `j185` (for iMac20,1). **NOTE**: Only applicable to macOS Catalina and newer. You should test these settings first using a USB Bootstick since it can prevent the system from booting. Disable it for installing macOS Monterey if you have issues.
+- Change `SecureBootModel`from `j185` (for iMac20,1) to `j185f` (for iMac20,2). **NOTE**: Only applicable to macOS Catalina and newer. You should test these settings first using a USB flash drive since it can prevent the system from booting. Disable it for installing macOS Monterey if you have issues.
 
 
 ### Optimizing CPU Power Management
@@ -157,17 +146,29 @@ When you're done, reboot. Have a look at the CPU behavior using Intel Power Gadg
 
 ![image](https://github.com/5T33Z0/Gigabyte-Z490-Vision-G-Hackintosh-OpenCore/blob/main/Pics/CPU_PM.png)
 
-### Enabling Apple Graphics Power Management (AGPM) for dedicated GPUs (NVDIA and AMD)
+### Enabling Apple Graphics Power Management (AGPM) for dedicated GPUs (NVIDIA and AMD)
 
-- Generate `AGPMInjector.kext` for your GPU using [AGPMInjector](https://github.com/Pavo-IM/AGPMInjector) and
+- Generate an `AGPMInjector.kext` for your GPU using [AGPMInjector](https://github.com/Pavo-IM/AGPMInjector)
 - Copy it to `EFI\OC\Kexts`
-- Enable the entry in the config.plist
+- Enable the entry in the `config.plist`
 - Save and reboot.
-- Open [IORegistryExplorer](https://github.com/utopia-team/IORegistryExplorer/releases) and search for`PR00`. If it look like this, CPU Power Management and AGPM are working correctly:
+- Open [IORegistryExplorer](https://github.com/utopia-team/IORegistryExplorer/releases) and search for`PR00`. CPU Power Management and AGPM are working correctly if it looks like this: </br>
+	![](https://github.com/5T33Z0/Gigabyte-Z490-Vision-G-Hackintosh-OpenCore/blob/main/Pics/AGPMEnabler.png)
 
-![](https://github.com/5T33Z0/Gigabyte-Z490-Vision-G-Hackintosh-OpenCore/blob/main/Pics/AGPMEnabler.png)
+### Calculating Scan Policy (optional)
+The items displayed in the Boot Picker Menu are based on a combination of bits representing supported devices (SATA, NVME, USB, etc.) and file systems (APFS, HFS, NTFS, etc.). There are 24 bits which can be turned on and off to modify what's displayed in the Boot Picker. The combination of selected bits create what's called the `ScanPolicy`. It's located under Misc > Security in the `config.plist.` The default value is `0` (everything). Although this is great for compatibility, it will also display EFI Folders on drives which are not the boot drive as well.
 
-**NOTE**: For more Post-Install tweaks and tips, check out 5T33Z0's small collection of [Config Tweaks](https://github.com/5T33Z0/Gigabyte-Z490-Vision-G-Hackintosh-OpenCore/blob/main/Additional%20Files/OpenCore_Config_Tweaks_EN.md)
+To change the `ScanPolicy`, you can make use of this online calculator: https://oc-scanpolicy.vercel.app/. I am using `2687747` for example which hides EFI Folders and NTFS Drives. If I need windows I just boot it from the BIOS Boot Menu (F12).
+
+**IMPORTANT**: Calculating a wrong `ScanPolicy` can lead to the Boot Picker being empty, so you can't boot into macOS. So make sure to test the value first by booting from FAT32 formatted USB Stick containing your EFI Folder with the new value for "Scan Policy".
+
+### Changing Themes
+- Add theme to `Resources/Image/[Theme name]`
+- Open `config.plist`
+- Go to Misc > Boot and change `PickerVariant` to: `[Theme name]`.
+- Save and reboot
+
+**NOTE**: For more Post-Install tweaks and tips, check out my small collection of [Config Tweaks](https://github.com/5T33Z0/Gigabyte-Z490-Vision-G-Hackintosh-OpenCore/blob/main/Additional%20Files/OpenCore_Config_Tweaks_EN.md)
 </details>
 
 ## Credits and Thank yous
