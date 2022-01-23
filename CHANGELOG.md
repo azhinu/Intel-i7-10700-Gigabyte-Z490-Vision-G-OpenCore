@@ -28,6 +28,7 @@
     - Removed `USBPorts.kext` → no longer needs. Refered to [SSDT-PORTS.aml](https://github.com/5T33Z0/OC-Little-Translated/tree/main/03_USB_Fixes/ACPI_Mapping_USB_Ports)
 - Reordered some config sections to match upstream.
 - Updated kexts
+- Updated CPUFriendDataProvider with more agressive powersave settings.
 - **Config**
   -  Removed NVRAM > Add `UIScale`. Refered to [Docs](https://dortania.github.io/docs/release/Configuration.html#x1-7900014)
   - Removed dublicated `csr-active-config` option.
