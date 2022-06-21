@@ -1,3 +1,12 @@
+**21.06.2022**
+- Fetched upstream
+- Updated config to Monterey
+- Removed some ACPI tables
+- Adopted to my new GPU - RX 6600 XT
+- Removed I225 fixes. See [5T33Z0/I225-V_FIX.md](https://github.com/5T33Z0/Gigabyte-Z490-Vision-G-Hackintosh-OpenCore/blob/main/I225-V_FIX.md)
+- Itlwm blueooth injector replaced with BlueToolFixup (needs for Monterey)
+
+
 **23.01.2022**
 - Fetched upstream:
   - Updated OpenCore to 0.7.7 Release.

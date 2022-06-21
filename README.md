@@ -4,17 +4,14 @@
 
 [![Board](https://img.shields.io/badge/Gigabyte-Z490_Vision_G-informational.svg)](https://www.gigabyte.com/Motherboard/Z490-VISION-G-rev-1x/support#support-dl-bios)
 [![OpenCore Version](https://img.shields.io/badge/OpenCore-0.7.7-important.svg)](https://github.com/acidanthera/OpenCorePkg/releases/latest)
-[![macOS Catalina](https://img.shields.io/badge/macOS-10.15.7-green.svg)](https://www.apple.com/li/macos/catalina/)
+[![macOS Monterey](https://img.shields.io/badge/macOS-12.5-green.svg)](https://www.apple.com/li/macos/monterey/)
 
-Original repo:
-[![macOS Big Sur](https://img.shields.io/badge/macOS-11.6.2-white.svg)](https://www.apple.com/macos/big-sur/)
-[![macOS Monterey](https://img.shields.io/badge/macOS-12.2-white.svg)](https://www.apple.com/macos/monterey-preview/)
 
 <img src="./Additional%20Files/sysinfo.png" width=600px/>
 
 ## Introduction
 
-This repo based on [5T33Z0 Gigabyte-Z490-Vision-G](https://github.com/5T33Z0/Gigabyte-Z490-Vision-G-Hackintosh-OpenCore). I made some changes especially for my system drived by Catalina, so i recommend you to check original repo.
+This repo based on [5T33Z0 Gigabyte-Z490-Vision-G](https://github.com/5T33Z0/Gigabyte-Z490-Vision-G-Hackintosh-OpenCore). I made some changes especially for my system, so i recommend you to check original repo.
 
 **NOTE**: For best results, read and follow the install instruction carefully and thoroughly.
 
@@ -28,16 +25,20 @@ This repo based on [5T33Z0 Gigabyte-Z490-Vision-G](https://github.com/5T33Z0/Gig
 | Component           | Details                                     |
 | :------------------ | :------------------------------------------ |
 | Mainboard           | Gigabyte Z490 Vision G                      |
-| BIOS		   			    | F20. F5 or higher is required to disable `CFG Lock`. Otherwise use Kernel Quirk `AppleXcpmCfgLock`|
+| BIOS		   			    | F21. F5 or higher is required to disable `CFG Lock`. Otherwise use Kernel Quirk `AppleXcpmCfgLock`|
 | CPU                 | Intel® Core i7 10700 (Codename Comet Lake) 	|
 | RAM                 | 32 GB DDR4 2400 Crucial Basllistix Sport LT |
 | iGPU		   			    | Intel® UHD 630 Headless                     |
-| dGPU                | AMD Radeon R9 270                           |
+| dGPU                | AMD Radeon RX 6600 XT                           |
 | Audio               | Realtek® ALC1220-VB (Layout-id: `28`)       |
 | Ethernet            | Intel® 2.5GbE LAN chip.                     |
 </details>
 <details>
 <summary><strong>BIOS Settings</strong></summary>
+
+| :warning: Issues related to macOS Monterey|
+|:------------------------------------------|
+|The I225-V Ethernet Controller doesn't work in macOS 12 by default. You need to [flash a custom firmware](https://github.com/5T33Z0/Gigabyte-Z490-Vision-G-Hackintosh-OpenCore/blob/main/I225-V_FIX.md).
 
 ### BIOS Settings
 
@@ -76,17 +77,30 @@ This repo based on [5T33Z0 Gigabyte-Z490-Vision-G](https://github.com/5T33Z0/Gig
 
 ### OpenCore Details
 
-* **Version**: 0.7.7 (details see `config.plist`)
-* **Compatible macOS**: 10.15.7 (Catalina)
+* **Version**: 0.8.2 (details see `config.plist`)
+* **Compatible macOS**: 12.5 (Monterey)
 * **System Definition:** `iMac20,1` Using a divergent SMBIOS rather than `iMac20,2` may require remapping of USB Ports, since the `info.plist` inside the `USBPorts.kext` refers to `iMac20,1` as `model`.
-* **ACPI Patches:** `SSDT-AWAC`, `SSDT-EC-USBX`, `SSDT-PLUG`, `SSDT-SBUS-MCHC`, `SSDT-DMAC`, `SSDT-PPMC`
 * **OpenCanopy Enabled**: `yes`
 * **Iconset**: [tekteq](https://github.com/tekteq/opencanopy-minimal-theme)
 * **Chime**: `no`
 * **FileVault**: `yes`
 * **SecureBootModel**: `j185`
 * **USB Ports Mapped:** `yes`. Details [here](https://github.com/5T33Z0/Gigabyte-Z490-Vision-G-Hackintosh-OpenCore/blob/main/Additional_Files/USB_Ports_List.pdf)
-* **csr-active-config:** Catalina: SIP Enabled
+* **csr-active-config:** SIP Enabled
+
+### About included ACPI Tables
+
+My EFI Folder contains additional ACPI Tables besides the usual, which you won't find in the OpenCore Install Guide. Some of them are board-specific, some of them are modified versions of the regular tables, some are just cosmetic.
+
+Here's what the extra tables do:
+
+DMAR: DMAR replacement table without Reserved Memory Regions so the I225-V LAN Card works in macOS Big Sur and Monterey.
+SSDT-AWAC-ARTC: Special variant of SSDT-AWAC. Disables AWAC Clock and enables RTC as ARTC instead. Also disables legacy HPET device.
+SSDT-DMAC (optional): Adds a fake Direct Memory Access Controller to the device tree of I/O Registry. It's cosmetic.
+SDT-FWHD (optional): Adds fake Firmware Hub Device (FWHD) to I/O Registry. Used by almost every intel-based Mac. It's comsetic.
+SSDT-XSPI (optional): Adds PCH SPI Controller to IORegistry as XSPI. So it's not a fake device but probably only a cosmetic change.
+NOTE: More info about additional ACPI Tables can be found on [OC Little Repo](https://github.com/5T33Z0/OC-Little-Translated/tree/main/01_Adding_missing_Devices_and_enabling_Features)
+
 
 ### Note about Kexts
 The following Kexts are enabled by default:
@@ -95,8 +109,9 @@ The following Kexts are enabled by default:
 	- Disable they if you don't have an Intel WiFi/Bluetooth module.
 
 - `CPUFriend.kext` and `CPUFriendDataProvider.kext`.
-	- If you use a different CPU model, create your own DataProviderKext using [CPUFriendFriend](https://github.com/corpnewt/CPUFriendFriend) and replace original kext. See [Post-install Tweaks
-](#Post-install-tweaks)</details>
+	- If you use a different CPU model, create your own DataProviderKext using [CPUFriendFriend](https://github.com/corpnewt/CPUFriendFriend) and replace original kext. See [Post-install Tweaks](#Post-install-tweaks)
+
+</details>
 
 ## Installation
 <details>
