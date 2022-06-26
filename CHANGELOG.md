@@ -1,3 +1,7 @@
+**27.06.2022**
+- Restored working `IntelBluetoothFirmware` kext
+
+
 **21.06.2022**
 - Fetched upstream
 - Updated config to Monterey
