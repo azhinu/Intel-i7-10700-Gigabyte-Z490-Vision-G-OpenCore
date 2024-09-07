@@ -1,3 +1,52 @@
+**07.09.2024**
+> [!IMPORTANT]
+> 
+> - Don't update AppleALC – it's a custom build only containing code required for Realtek ALC1220 using layout-id 17!
+> - AdvancedMap does work in Sequoia but it doesn't work in Sonoma.
+- Fetched upstream:
+  - ACPI:
+    - Enabled DMAR table
+    - Disabled `SSDT-PLUG`. No longer required.
+    - Disabled `SSDT-MCHC` &rarr; AppleSMBusPCI driver loads fine without it.
+    - Removed `SSDT-XSPI` &rarr; Cosmetic only.
+    - Added `SSDT-PORTS.aml` &rarr; Switched to SSDT USB mapping.
+    - Deleted cosmetic tables: `SSDT-DMAC`, `SSDT-FWHD` and `SSDT-PMC`.
+    - Dropped `HPET` Table &rarr; Superfluous `HPET` since it is a legacy device which is disabled by `SSDT-AWAC-ARTC.aml` anyway.
+    - Enabled Quirk `FadtEnableReset` &rarr; Fixes  Crashes on shutdown/reboot. There were crash notifications after rebooting/shutting down macOS 15 (24A5264n).
+    - Disabled NormalizeHeaders &rarr; No longer required.
+    - Enabled `ResetLogoStatus` Quirk since value for "Displayed" in `BGRT.aml` is not `0`.
+  - Booter
+    - Populated `MmmioWhitelist` after analyzing bootlog (See [guide](https://github.com/5T33Z0/OC-Little-Translated/tree/main/12_MMIO_Whitelist) for more details)
+    - Disabled **Booter/Patch** for macOS 13 compatibility:
+		- `Skip Board ID check`
+		- `Reroute HW_BID to OC_BID`
+		- Enabled `AvoidRuntimeDefrag` quirk.
+  - DeviceProperties
+    - Removed `Radeon R9 270` patch
+    - Updated `Intel UHD Graphics 630` patch
+  - Kexts
+    - Added [**AppleIGC.kext**](https://github.com/SongXiaoXi/AppleIGC) &rarr; Kext for Intel I225-V 2.5 Gbit Ethernet. No more pesky fixes forgetting Ethernet to work are required!
+    - Added [AdvancedMap.kext](https://github.com/narcyzzo/AdvancedMap) &rarr; Enables 3D Globe in Maps.
+    - Added `AMFIPass`
+  - Kernel
+    - Patch
+      -  Disabled for macOS 13 compatibility:
+      - `Force IOGetVMMPresent`
+  		- `Reroute kern.hv_vmm_present patch (1)`
+  		- `Reroute kern.hv_vmm_present patch (2)`
+  		- `Disable Library Validation Enforcement`
+		- Quirks
+  		- Enabled `CustomSMBIOSGuid` ???
+  		- Enabled `DisableIoMapperMapping`
+		- Scheme
+  		- Disabled `Kernel/Scheme/FuzzyMatch` &rarr; Only required for legacy OSX ≤ 10.6
+  - Misc
+    - Boot
+      - `HibernateMode` set to `NVRAM` 
+    - NVRAM
+      - Added `revpatch:asset` &rarr; Allows Content Caching when `sysctl kern.hv_vmm_present` returns `1` on macOS 11.3 or newer
+  		- Added `revblock:pci` to prevent PCI and RAM configuration notifications when using `MacPro7,1` SMBIOS
+
 **27.06.2022**
 - Restored working `IntelBluetoothFirmware` kext
 

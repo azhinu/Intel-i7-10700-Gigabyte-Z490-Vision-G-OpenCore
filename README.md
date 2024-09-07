@@ -4,7 +4,7 @@
 
 [![Board](https://img.shields.io/badge/Gigabyte-Z490_Vision_G-informational.svg)](https://www.gigabyte.com/Motherboard/Z490-VISION-G-rev-1x/support#support-dl-bios)
 [![OpenCore Version](https://img.shields.io/badge/OpenCore-0.7.7-important.svg)](https://github.com/acidanthera/OpenCorePkg/releases/latest)
-[![macOS Monterey](https://img.shields.io/badge/macOS-12.5-green.svg)](https://www.apple.com/li/macos/monterey/)
+[![macOS Monterey](https://img.shields.io/badge/macOS-14.6-green.svg)](https://www.apple.com/macos/sonoma/)
 
 
 <img src="./Additional%20Files/sysinfo.png" width=600px/>
@@ -30,15 +30,18 @@ This repo based on [5T33Z0 Gigabyte-Z490-Vision-G](https://github.com/5T33Z0/Gig
 | RAM                 | 32 GB DDR4 2400 Crucial Basllistix Sport LT |
 | iGPU		   			    | Intel® UHD 630 Headless                     |
 | dGPU                | AMD Radeon RX 6600 XT                           |
-| Audio               | Realtek® ALC1220-VB (Layout-id: `28`)       |
+| Audio               | Realtek® ALC1220-VB (Layout-id: `17`)       |
 | Ethernet            | Intel® 2.5GbE LAN chip.                     |
 </details>
 <details>
 <summary><strong>BIOS Settings</strong></summary>
 
-| :warning: Issues related to macOS Monterey|
-|:------------------------------------------|
-|The I225-V Ethernet Controller doesn't work in macOS 12 by default. You need to [flash a custom firmware](https://github.com/5T33Z0/Gigabyte-Z490-Vision-G-Hackintosh-OpenCore/blob/main/I225-V_FIX.md).
+|⚠️ Important Updates|
+|:--------------------------|
+| Upgrading from to macOS 14.3.1 to 14.4 and newer via `System Update`causes a Kernel Panic during install! The workaround is to temporarily disable `SecureBootModel` ([**Background**](https://github.com/5T33Z0/OC-Little-Translated/blob/main/W_Workarounds/macOS14.4.md))
+| The Intel I225-V Ethernet Controller finally got a dedicated kext called [**AppleIGC**](https://github.com/SongXiaoXi/AppleIGC) so the [**previous fixes**](https://github.com/5T33Z0/Gigabyte-Z490-Vision-G-Hackintosh-OpenCore/blob/main/I225-V_FIX.md) are now obsolete!
+|600/700-series Nvidia Cards require root patching with [**OpenCore Legacy Patcher**](https://github.com/dortania/OpenCore-Legacy-Patcher/releases) to reinstall Nvidia drivers.
+
 
 ### BIOS Settings
 
@@ -77,8 +80,8 @@ This repo based on [5T33Z0 Gigabyte-Z490-Vision-G](https://github.com/5T33Z0/Gig
 
 ### OpenCore Details
 
-* **Version**: 0.8.2 (details see `config.plist`)
-* **Compatible macOS**: 12.5 (Monterey)
+* **Version**: 1.0.1 (details see `config.plist`)
+* **Compatible macOS**: 14.6 (Sonoma)
 * **System Definition:** `iMac20,1` Using a divergent SMBIOS rather than `iMac20,2` may require remapping of USB Ports, since the `info.plist` inside the `USBPorts.kext` refers to `iMac20,1` as `model`.
 * **OpenCanopy Enabled**: `yes`
 * **Iconset**: [tekteq](https://github.com/tekteq/opencanopy-minimal-theme)
@@ -90,22 +93,18 @@ This repo based on [5T33Z0 Gigabyte-Z490-Vision-G](https://github.com/5T33Z0/Gig
 
 ### About included ACPI Tables
 
-My EFI Folder contains additional ACPI Tables besides the usual, which you won't find in the OpenCore Install Guide. Some of them are board-specific, some of them are modified versions of the regular tables, some are just cosmetic.
+- [**DMAR**] (optional): [DMAR replacement table](https://github.com/5T33Z0/Gigabyte-Z490-Vision-G-Hackintosh-OpenCore/blob/main/Additional_Files/ACPI/DMAR.dsl) with specific Reserved Memory Regions removed. For 3rd party LAN/Wifi/BT cards that won't work if VT-D and the Intel I225-V controller are enabled (macOS Big Sur and newer). 
+- **SSDT-AWAC-ARTC**: Custom variant of `SSDT-AWAC.` Disables AWAC Clock and enables `RTC` as `ARTC` instead. Also disables legacy `HPET` device.
+- **SSDT-PORTS**: OS-agnostic USB Port Mapping Table for the Z490 Vision G. No additional USB Port kext or quirks are required. Since the USB ports are mapped via ACPI, they will work in *any* version of macOS. Check [**this pdf**](https://github.com/5T33Z0/Gigabyte-Z490-Vision-G-Hackintosh-OpenCore/blob/main/Additional_Files/USB/USB_Ports_List.pdf) for a detailed list of mapped ports. **NOTE**: macOS does not support USB 3.2 via the USB protocol. It requires Thunderbold 3 or newer instead to support speeds greater than 5 Gbit. So there's no speed benefit when using the red USB ports over the blue ones when running macOS!
+- **SSDT-PLUG.aml**: Not needed for macOS 12 and newer. Also not needed when using `CPUFriend.kext` and `CPUFriendDataProvider.kext`.
 
-Here's what the extra tables do:
-
-DMAR: DMAR replacement table without Reserved Memory Regions so the I225-V LAN Card works in macOS Big Sur and Monterey.
-SSDT-AWAC-ARTC: Special variant of SSDT-AWAC. Disables AWAC Clock and enables RTC as ARTC instead. Also disables legacy HPET device.
-SSDT-DMAC (optional): Adds a fake Direct Memory Access Controller to the device tree of I/O Registry. It's cosmetic.
-SDT-FWHD (optional): Adds fake Firmware Hub Device (FWHD) to I/O Registry. Used by almost every intel-based Mac. It's comsetic.
-SSDT-XSPI (optional): Adds PCH SPI Controller to IORegistry as XSPI. So it's not a fake device but probably only a cosmetic change.
-NOTE: More info about additional ACPI Tables can be found on [OC Little Repo](https://github.com/5T33Z0/OC-Little-Translated/tree/main/01_Adding_missing_Devices_and_enabling_Features)
+	**NOTE**: Additional info about these ACPI Tables can be found on my [**OC Little Repo**](https://github.com/5T33Z0/OC-Little-Translated/tree/main/01_Adding_missing_Devices_and_enabling_Features)
 
 
 ### Note about Kexts
 The following Kexts are enabled by default:
 
-- `IntelBluetoothFirmware.kext`, `IntelBluetoothInjector.kext`, `itlwm.kext`
+- `IntelBluetoothFirmware.kext`, `BlueToolFixup.kext`, `itlwm.kext`
 	- Disable they if you don't have an Intel WiFi/Bluetooth module.
 
 - `CPUFriend.kext` and `CPUFriendDataProvider.kext`.
@@ -129,7 +128,7 @@ If you are on Windows or Linux, follow the guide provided by [Dortania](https://
 
 1. Download latest Release and unpack it
 2. Select the config of your choice and rename it to `config.plist`
-3. To disable SIP, use `csr-active-config` `FF070000` for Catalina/Mojave
+3. To disable SIP, use `csr-active-config` `AwgAAA==` for macOS 11 and newer
 4. Graphics:
 	- AMD GPUs may require additional `boot-args`. Check WhateverGreen repo to find out which you need.
 	- The `config.plist` uses iGPU for Display(s) by default. If you want to use dGPU and iGPU in headless mode, open `config.plist` with a plist editor (or text editor) and comment-out the dictionary `PciRoot(0x0)/Pci(0x2,0x0)` with "#" first, to disable the existing entry. Then uncomment headless dict.		- **NOTE:** To choose preffered GPU, you need enable `CSM Support` in `Boot tab`, then go back to `IO Ports`, choose preffered GPU and finally disable `CSM Support`
