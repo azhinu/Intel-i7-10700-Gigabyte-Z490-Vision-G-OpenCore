@@ -53,7 +53,7 @@
 				<key>Comment</key>
 				<string>USB Port Mapping</string>
 				<key>Enabled</key>
-				<true/>
+				<false/>
 				<key>Path</key>
 				<string>SSDT-PORTS.aml</string>
 			</dict>
@@ -532,7 +532,7 @@
         <key>Comment</key>
         <string>USB Port Mappings. No longer required</string>
         <key>Enabled</key>
-        <false/>
+        <true/>
         <key>ExecutablePath</key>
         <string></string>
         <key>MaxKernel</key>
@@ -700,6 +700,36 @@
 				<key>Skip</key>
 				<integer>0</integer>
 			</dict>
+      <dict>
+        <key>Arch</key>
+        <string>Any</string>
+        <key>Base</key>
+        <string>__ZN8AppleRTC18setupDateTimeAlarmEPK11RTCDateTime</string>
+        <key>Comment</key>
+        <string>Disable RTC wake scheduling</string>
+        <key>Count</key>
+        <integer>1</integer>
+        <key>Enabled</key>
+        <true/>
+        <key>Find</key>
+        <data></data>
+        <key>Identifier</key>
+        <string>com.apple.driver.AppleRTC</string>
+        <key>Limit</key>
+        <integer>0</integer>
+        <key>Mask</key>
+        <data></data>
+        <key>MaxKernel</key>
+        <string></string>
+        <key>MinKernel</key>
+        <string>19.0.0</string>
+        <key>Replace</key>
+        <data>ww==</data>
+        <key>ReplaceMask</key>
+        <data></data>
+        <key>Skip</key>
+        <integer>0</integer>
+      </dict>
 		</array>
 		<key>Quirks</key>
 		<dict>
@@ -793,7 +823,7 @@
 			<key>PollAppleHotKeys</key>
 			<true/>
 			<key>ShowPicker</key>
-			<false/>
+			<true/>
 			<key>TakeoffDelay</key>
 			<integer>0</integer>
 			<key>Timeout</key>
@@ -919,7 +949,7 @@
 				<key>SystemAudioVolume</key>
 				<data>Rg==</data>
 				<key>boot-args</key>
-				<string>agdpmod=pikera #-lilubetaall</string>
+				<string>agdpmod=pikera debug=0x100 and keepsyms=1 #-lilubetaall</string>
 				<key>prev-lang:kbd</key>
 				<string>en-US:0</string>
 				<key>run-efi-updater</key>
