@@ -875,7 +875,8 @@
                 <key>ScanPolicy</key>
                 <integer>2687747</integer>
                 <key>SecureBootModel</key>
-                <string>j185</string>
+                <string>Disabled</string>
+                <!-- <string>j185</string> -->
                 <key>Vault</key>
                 <string>Optional</string>
             </dict>
@@ -978,7 +979,7 @@
                     <key>boot-args</key>
                     <string>agdpmod=pikera debug=0x100 and keepsyms=1 #-lilubetaall</string>
                     <key>prev-lang:kbd</key>
-                    <string>en-US:0</string>
+                    <string>en-US:252</string>
                     <key>run-efi-updater</key>
                     <string>No</string>
                 </dict>

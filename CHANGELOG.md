@@ -1,3 +1,7 @@
+**13.10.2024 v2**
+* Updated `BlueToolFixup.kext`
+* Fixed FireVault keyboard layout
+
 **13.10.2024**
 
 * Updated OpenCore to version 1.0.2 (Nightly)
