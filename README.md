@@ -1,13 +1,13 @@
 # Gigabyte Z490 Vision G Hackintosh OpenCore
 
-**Repo status**: Slowly maintained. Tested only with Catalina
+**Repo status**: Slowly maintained. Tested only with Sequoia
 
 [![Board](https://img.shields.io/badge/Gigabyte-Z490_Vision_G-informational.svg)](https://www.gigabyte.com/Motherboard/Z490-VISION-G-rev-1x/support#support-dl-bios)
-[![OpenCore Version](https://img.shields.io/badge/OpenCore-0.7.7-important.svg)](https://github.com/acidanthera/OpenCorePkg/releases/latest)
-[![macOS Monterey](https://img.shields.io/badge/macOS-14.6-green.svg)](https://www.apple.com/macos/sonoma/)
+[![OpenCore Version](https://img.shields.io/badge/OpenCore-1.0.2-important.svg)](https://github.com/acidanthera/OpenCorePkg/releases/latest)
+[![macOS Sequoia](https://img.shields.io/badge/macOS-15-green.svg)](https://www.apple.com/macos/sequoia/)
 
 
-<img src="./Additional%20Files/sysinfo.png" width=600px/>
+<img src="./Additional%20Files/sysinfo.png" width=400px/>
 
 ## Introduction
 
@@ -80,8 +80,8 @@ This repo based on [5T33Z0 Gigabyte-Z490-Vision-G](https://github.com/5T33Z0/Gig
 
 ### OpenCore Details
 
-* **Version**: 1.0.1 (details see `config.plist`)
-* **Compatible macOS**: 14.6 (Sonoma)
+* **Version**: 1.0.2 (details see `config.plist`)
+* **Compatible macOS**: 15 (Sequoia)
 * **System Definition:** `iMac20,1` Using a divergent SMBIOS rather than `iMac20,2` may require remapping of USB Ports, since the `info.plist` inside the `USBPorts.kext` refers to `iMac20,1` as `model`.
 * **OpenCanopy Enabled**: `yes`
 * **Iconset**: [tekteq](https://github.com/tekteq/opencanopy-minimal-theme)

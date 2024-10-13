@@ -1,3 +1,11 @@
+**13.10.2024**
+
+* Updated OpenCore to version 1.0.2 (Nightly)
+* Updated Drivers and kexts
+* Added custom compiled AdvancedMap.kext based on PR from unitedastronomer. Enables 3D Globe in Maps app in macOS Monterey to Sequoia
+* Reverted to `SSDT-PORTS.aml` instead of `USBPorts.kext` for USB mapping
+* Tested with macOS 15.0
+
 **07.09.2024**
 > [!IMPORTANT]
 > 
