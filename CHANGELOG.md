@@ -1,3 +1,8 @@
+**01.01.2024**
+* Fixed bluetooth on some systems.
+* Softwares updates now are available
+* Upgraded `IntelBluetoothFirmware.kext` to latest.
+
 **13.10.2024 v2**
 * Updated `BlueToolFixup.kext`
 * Fixed FireVault keyboard layout
